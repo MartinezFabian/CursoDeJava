@@ -35,18 +35,12 @@ public class Cine {
         Espectadores[] espectadores = new Espectadores[cantidad];
 
         //Filas
-        ArrayList<Integer> coleccionEspectadoresA;
-        coleccionEspectadoresA = new ArrayList<>();
-        ArrayList <Integer> coleccionEspectadoresB;
-        coleccionEspectadoresB = new ArrayList<>();
-        ArrayList <Integer> coleccionEspectadoresC;
-        coleccionEspectadoresC = new ArrayList<>();
-        ArrayList <Integer> coleccionEspectadoresD;
-        coleccionEspectadoresD= new ArrayList<>();
-        ArrayList <Integer> coleccionEspectadoresE;
-        coleccionEspectadoresE = new ArrayList<>();
-        ArrayList <Integer> coleccionEspectadoresF;
-        coleccionEspectadoresF = new ArrayList<>();
+        ArrayList<Integer> filaA = new ArrayList<>();
+        ArrayList <Integer> filaB = new ArrayList<>();
+        ArrayList <Integer> filaC = new ArrayList<>();
+        ArrayList <Integer> filaD = new ArrayList<>();
+        ArrayList <Integer> filaE = new ArrayList<>();
+        ArrayList <Integer> filaF = new ArrayList<>();
 
         String nombre;
         String edadString;
@@ -102,61 +96,61 @@ public class Cine {
                     }
                 }while (!x);
 
-                //Agregar la fila a la condicion del if de abajo asi tambien tiene en cuenta la fila, y agregar un if por cada fila
-
+                //Verifica que el numero de silla sea valido
                 if (silla > 0 && silla <= cantidad) {
+                    //Verifica que en la fila seleccionada no este ocupada la silla
                     switch (fila) {
                         case "a": {
-                            if (!coleccionEspectadoresA.contains(silla)) {
+                            if (!filaA.contains(silla)) {
                                 correcto = true;
-                                coleccionEspectadoresA.add(silla);
-                            } else System.out.println("Silla no disponible. Intente nuevamente.");
+                                filaA.add(silla);
+                            } else System.out.println("Silla ocupada. Intente nuevamente.");
                         }
                         break;
 
                         case "b": {
-                            if (!coleccionEspectadoresB.contains(silla)) {
+                            if (!filaB.contains(silla)) {
                                 correcto = true;
-                                coleccionEspectadoresB.add(silla);
-                            } else System.out.println("Silla no disponible. Intente nuevamente.");
+                                filaB.add(silla);
+                            } else System.out.println("Silla ocupada. Intente nuevamente.");
 
                         }
                         break;
 
                         case "c": {
-                            if (!coleccionEspectadoresC.contains(silla)) {
+                            if (!filaC.contains(silla)) {
                                 correcto = true;
-                                coleccionEspectadoresC.add(silla);
-                            } else System.out.println("Silla no disponible. Intente nuevamente.");
+                                filaC.add(silla);
+                            } else System.out.println("Silla ocupada. Intente nuevamente.");
                         }
                         break;
 
                         case "d": {
-                            if (!coleccionEspectadoresD.contains(silla)) {
+                            if (!filaD.contains(silla)) {
                                 correcto = true;
-                                coleccionEspectadoresD.add(silla);
-                            } else System.out.println("Silla no disponible. Intente nuevamente.");
+                                filaD.add(silla);
+                            } else System.out.println("Silla ocupada. Intente nuevamente.");
                         }
                         break;
 
                         case "e": {
-                            if (!coleccionEspectadoresE.contains(silla)) {
+                            if (!filaE.contains(silla)) {
                                 correcto = true;
-                                coleccionEspectadoresE.add(silla);
-                            } else System.out.println("Silla no disponible. Intente nuevamente.");
+                                filaE.add(silla);
+                            } else System.out.println("Silla ocupada. Intente nuevamente.");
                         }
                         break;
 
                         case "f": {
-                            if (!coleccionEspectadoresF.contains(silla)) {
+                            if (!filaF.contains(silla)) {
                                 correcto = true;
-                                coleccionEspectadoresF.add(silla);
-                            } else System.out.println("Silla no disponible. Intente nuevamente.");
+                                filaF.add(silla);
+                            } else System.out.println("Silla ocupada. Intente nuevamente.");
                         }
                         break;
 
                         default: {
-                            System.out.println("Error fila ingresada invalida o fuera de los limites.(Ingresa solo minusculas)");
+                            System.out.println("Error fila ingresada invalida o fuera de los limites.");
                         }
                     }
 
@@ -185,7 +179,7 @@ public class Cine {
         return s1;
     }
 
-    //Verifica que el string ingresado sea solo una letra
+    //Verifica que el string ingresado sea solo una letra y que no este fuera de los limites
     public static String ingresarSoloLetra(Scanner s) {
 
         String letras;
@@ -202,8 +196,7 @@ public class Cine {
 
 
             do {
-                System.out.print("Fila (a-f): ");
-                letras = s.nextLine();
+                letras = validacionString("Fila (a-f): ", s).toLowerCase();
                 cont = 0;
 
                 for (int i = 0; i < letras.length(); i++) {
@@ -220,7 +213,12 @@ public class Cine {
                     cont = 0;
                 } else {
                     condicion = true;
+
+                    if(!varLetras.contains(letras)){
+                        System.out.println("Error fila ingresada fuera de los limites.");
+                    }
                 }
+
             } while ((!condicion) || (!varLetras.contains(letras)));
 
 
