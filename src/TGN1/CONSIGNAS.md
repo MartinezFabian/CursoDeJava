@@ -1,9 +1,10 @@
-#RESOLVER:
+RESOLVER:
+
 ![img.png](UML.png)
 
 Realice un programa que permita la gestión de salas de cine, los espectadores de cada sala, los empleados del cine y los acomodadores asignados a una sala.
 
-###El programa deberá cumplir con las siguientes funcionalidades:
+El programa deberá cumplir con las siguientes funcionalidades:
 
 
 1. Una sala de cine debe contener la capacidad de la sala, la película que se proyecta en la misma, el nombre de la sala y el listado de espectadores asignados a la misma.
