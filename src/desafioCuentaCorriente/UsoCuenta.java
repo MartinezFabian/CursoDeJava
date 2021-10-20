@@ -1,4 +1,4 @@
-package poo.desafio.cuentacorriente;
+package desafioCuentaCorriente;
 
 public class UsoCuenta {
     public static void main(String[] args) {
