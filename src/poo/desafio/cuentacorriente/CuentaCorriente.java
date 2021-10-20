@@ -1,4 +1,4 @@
-package desafioCuentaCorriente;
+package poo.desafio.cuentacorriente;
 
 public class CuentaCorriente {
     private String nombreTitular;
