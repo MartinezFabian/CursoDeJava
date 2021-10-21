@@ -34,7 +34,7 @@ public class Espectadores extends Persona{
 
     @Override
     public String getTipo() {
-        return "Espectadores";
+        return "Espectador";
     }
 
     @Override
