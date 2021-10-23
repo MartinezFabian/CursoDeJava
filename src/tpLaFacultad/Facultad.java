@@ -1,25 +1,39 @@
 package tpLaFacultad;
 
-import java.util.LinkedList;
+import java.util.Comparator;
+import java.util.TreeSet;
 
-class Facultad {
+class Facultad implements Informacion {
     private String nombre;
-    private LinkedList<Carrera> coleccionCarrera;
+    private TreeSet<Carrera> coleccionCarrera;
 
-    public Facultad(String nombre) {
+    //Constructor
+    public Facultad(String nombre, Carrera comparadorCarrera) {
         this.nombre = nombre;
-        this.coleccionCarrera = new LinkedList<Carrera>();
+        this.coleccionCarrera = new TreeSet<Carrera>(comparadorCarrera);
+    }
+
+    //Constructor sin argumentos
+    public Facultad(){ }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public TreeSet<Carrera> getColeccionCarrera() {
+        return coleccionCarrera;
+    }
+
+    public void setColeccionCarrera(TreeSet<Carrera> coleccionCarrera) {
+        this.coleccionCarrera = coleccionCarrera;
     }
 
     public void agregarCarrera(Carrera nuevaCarrera) {
         coleccionCarrera.add(nuevaCarrera);
-    }
-
-    public void mostrarCarreras() {
-        System.out.println("Carrera:  " + this.nombre);
-        for (Carrera carrera : coleccionCarrera) {
-            System.out.println("-" + carrera.toString());
-        }
     }
 
     public boolean eliminarCarrera(String nombreCarrera) {
@@ -34,4 +48,16 @@ class Facultad {
         return encontro;
     }
 
+    @Override
+    public int verCantidad() {
+        return coleccionCarrera.size();
+    }
+
+    @Override
+    public void listarContenidos() {
+        System.out.println("\nFacultad:  " + this.nombre);
+        for (Carrera carrera : coleccionCarrera) {
+            System.out.println("-" + carrera.toString());
+        }
+    }
 }

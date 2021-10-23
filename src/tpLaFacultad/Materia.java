@@ -1,17 +1,22 @@
 package tpLaFacultad;
 
-import java.util.LinkedList;
+import java.util.Comparator;
+import java.util.TreeSet;
 
-class Materia {
+class Materia implements Informacion, Comparator<Materia> {
     private String nombre;
     private Profesor titular;
-    private LinkedList<Estudiante> coleccionEstudiantes;
+    private TreeSet<Estudiante> coleccionEstudiantes;
 
-    public Materia(String nombre, Profesor titular) {
+    //Constructor
+    public Materia(String nombre, Profesor titular, Estudiante comparadorEstudiante) {
         this.nombre = nombre;
         this.titular = titular;
-        this.coleccionEstudiantes = new LinkedList<Estudiante>();
+        this.coleccionEstudiantes = new TreeSet<Estudiante>(comparadorEstudiante);
     }
+
+    //Constructor sin argumentos
+    public Materia(){ }
 
     public void agregarEstudiante (Estudiante estudianteNuevo){
         this.coleccionEstudiantes.add(estudianteNuevo);
@@ -29,13 +34,39 @@ class Materia {
     }
 
     public void modificarTitular(Profesor profesor){
-
+        this.titular = profesor;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
 
     @Override
     public String toString() {
-        return "Materia: "+ nombre + "\n" +
+        return " Materia: "+ nombre + "\n" +
                 "Titular: " + titular + "\n"+
                 "Estudiantes: "+ coleccionEstudiantes.size()+" \n" + coleccionEstudiantes;
+    }
+
+    @Override
+    public int verCantidad() {
+        return coleccionEstudiantes.size();
+    }
+
+    @Override
+    public void listarContenidos() {
+        System.out.println("\nMateria:  " + this.nombre);
+        for (Estudiante estudiante : coleccionEstudiantes){
+            System.out.println("\n-" + estudiante.toString());
+        }
+    }
+
+    @Override
+    public int compare(Materia o1, Materia o2) {
+        String nombreMateria1 = o1.getNombre();
+        String nombreMateria2 = o2.getNombre();
+
+        return nombreMateria1.compareTo(nombreMateria2);
     }
 }

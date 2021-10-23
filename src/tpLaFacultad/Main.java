@@ -1,57 +1,159 @@
 package tpLaFacultad;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Main {
     public static void main (String args[]) {
-        Facultad facultad = new Facultad("UTN frre");
 
-        //1. Agregar Carreras a una Facultad
+        Scanner scanner = new Scanner(System.in);
 
-        facultad.agregarCarrera(new Carrera("ISI"));
-        facultad.agregarCarrera(new Carrera("TUP"));
-        facultad.agregarCarrera(new Carrera("IEM"));
-        facultad.mostrarCarreras();
+        Carrera comparadorCarrera = new Carrera();
 
-        //2. Eliminar Carreras de la facultad.
+        Facultad facultad = new Facultad("UTN frre", comparadorCarrera);
 
-        facultad.eliminarCarrera("IEM");
-        facultad.mostrarCarreras();
+        //Agregar Carreras a una Facultad
+        Materia comparadorMateria = new Materia();
 
-        //3. Eliminar Estudiantes de una facultad implica que se elimine el estudiante de cada
-        // una de las materias a las cuales se inscribió.
+        facultad.agregarCarrera(new Carrera("Ingeniería en Sistemas de Información", comparadorMateria));
+        facultad.agregarCarrera(new Carrera("Tecnicatura Universitaria en Programación", comparadorMateria));
+        facultad.agregarCarrera(new Carrera("Ingeniería Electromecánica", comparadorMateria));
 
-        //4. Agregar materias a una Carrera.
+        facultad.listarContenidos();
 
-        //5. Eliminar materias a una Carrera.
+        //Eliminar Carreras de la facultad.
 
-        // 6. Encontrar materias de una carrera en particular indicando el nombre de la materia.
+        facultad.eliminarCarrera("Ingeniería Electromecánica");
+
+        System.out.println("\nSe elimino una carrera: ");
+        facultad.listarContenidos();
+
+        //Agregar materias a una Carrera.
+        Estudiante comparadorEstudiante = new Estudiante();
+
+        facultad.getColeccionCarrera().first()
+                .agregarMateria(new Materia("Matemática discreta",
+                        new Profesor("Belen", "Fernandez", 12345, 40000, 5), comparadorEstudiante));
+
+        facultad.getColeccionCarrera().first()
+                .agregarMateria(new Materia("Sistemas y Organizaciones",
+                        new Profesor("Maria", "Vallejos", 13254, 40000, 6), comparadorEstudiante));
+
+        facultad.getColeccionCarrera().first()
+                .agregarMateria(new Materia("Algoritmo y Estructura de Datos",
+                        new Profesor("Alexis", "Dominguez", 23154, 40000, 2), comparadorEstudiante));
+
+        facultad.getColeccionCarrera().first().listarContenidos();
+
+        // Eliminar materias a una Carrera.
+
+        facultad.getColeccionCarrera().first().eliminarMateria("Matemática discreta");
+
+
+        System.out.println("\nSe elimino una materia: ");
+        facultad.getColeccionCarrera().first().listarContenidos();
+
+
+        // Agregar Estudiantes a una Materia.
+        Estudiante estudianteUno = new Estudiante("Franco", "Fernandez", 23123);
+        Estudiante estudianteDos = new Estudiante("Lucas", "Rodriguez", 32323);
+        Estudiante estudianteTres = new Estudiante("Mauricio", "Perez", 31121);
+
+        facultad.getColeccionCarrera().first().getColeccionMaterias().first().agregarEstudiante(estudianteUno);
+        facultad.getColeccionCarrera().first().getColeccionMaterias().first().agregarEstudiante(estudianteDos);
+        facultad.getColeccionCarrera().first().getColeccionMaterias().first().agregarEstudiante(estudianteTres);
+
+        System.out.println("\nSe agregaron estudiantes: ");
+
+        facultad.getColeccionCarrera().first().getColeccionMaterias().first().listarContenidos();
+
+        // Eliminar Estudiante de una Materia.
+        facultad.getColeccionCarrera().first().getColeccionMaterias().first().eliminarEstudiante(31121);
+        System.out.println("\nSe elimino un estudiante de una materia: ");
+        facultad.getColeccionCarrera().first().getColeccionMaterias().first().listarContenidos();
+
+        // Modificar el Profesor de la materia.
+
+        Profesor profesorNuevo = new Profesor("Sebastian", "Romero", 11223, 40000, 1);
+
+        System.out.println("\nNuevo profesor: ");
+        System.out.println(profesorNuevo.toString());
+        //El método calcularSueldo() de la clase Profesores calcula el sueldo sumando un 10% al básico por cada año de antiguedad.
+        double sueldo = profesorNuevo.calcularSueldo();
+        System.out.println("Sueldo profesor: $" + sueldo);
+
+        facultad.getColeccionCarrera().first().getColeccionMaterias().first().modificarTitular(profesorNuevo);
+
+        System.out.println("\nSe modifico el profesor de una materia: ");
+        facultad.getColeccionCarrera().first().listarContenidos();
+
+        //El método verCantidad() de la interface Información muestra la cantidad de elementos que contiene,
+        // es decir que en el caso de la clase Carreras, devolverá la cantidad de materias que posee,
+        // en el caso de la clase Materias, la cantidad de estudiantes que tienen, etc.
+
+        System.out.println("\nCantidad de materias de la carrera " + facultad.getColeccionCarrera().first().getNombre()
+        + ": " + facultad.getColeccionCarrera().first().verCantidad());
+
+        System.out.println("\nCantidad de estudiantes de la materia " +
+                facultad.getColeccionCarrera().first().getColeccionMaterias().first().getNombre() + ": "
+                + facultad.getColeccionCarrera().first().getColeccionMaterias().first().verCantidad());
+
+
+        // Encontrar materias de una carrera en particular indicando el nombre de la materia.
         // Si la materia existe nos deberá preguntar si deseamos eliminar.
 
-        //7. Agregar Estudiantes a una Materia.
+        boolean continuar = false;
 
-        // 8. Eliminar Estudiante de una Materia.
+        do{
+            String nombreMateria = validacionString("\nIngrese el nombre de la materia: ");
 
-        // 9. Modificar el Profesor de la materia.
+            boolean encontro = facultad.getColeccionCarrera().first().encontrarMateria(nombreMateria);
 
-        //10. Las clases Estudiantes y Profesores descienden de la clase abstracta Personas.
+            if(encontro){
 
-        //11. El método calcularSueldo() de la clase Profesores calcula el sueldo
-        // sumando un 10% al básico por cada año de antiguedad.
+                System.out.println("\n¿Desea eliminar la materia: " + nombreMateria + "? \n1. Si\n2. No");
+                int eleccion = scanner.nextInt();
 
-        // 12. El método listarContenidos() de la interface Información lista los elementos de la clase contenida,
-        // es decir que de la clase Facultad se listará las Carreras, de la clase Carreras las materias, etc.
-        // Siempre en orden alfabético.
+                if(eleccion == 1){
+                    //Elimino la materia
+                    facultad.getColeccionCarrera().first().eliminarMateria(nombreMateria);
+                    System.out.println("\nLa materia fue eliminada con éxito.");
 
-        // 13. El método verCantidad() de la interface Información muestra la cantidad de elementos que contiene,
-        // es decir que en el caso de la clase Carreras, devolverá la cantidad de materias que posee, en el caso de la clase Materias,
-        // la cantidad de estudiantes que tienen, etc
+                    facultad.getColeccionCarrera().first().listarContenidos();
+                }
 
-        // 14. Los constructores de todas las clases deben inicializar o cargar cada uno de los atributos que posee.
+            }else{
+                System.out.println("\nLa materia ingresada no existe");
+            }
 
-        // 15. Todas las clases deben tener los métodos toString() para ver todos los datos de la clase
-        // y los métodos geters y seter por cada una de sus atributos.
+            try{
+                System.out.println("\n¿Desea ingresar otra materia? \n1.Si\n2.No");
+                int respuesta = scanner.nextInt();
 
-        //16. Todos los lugares que signifiquen el ingreso de datos deberán establecer controles por posibles
-        // ingresos erróneos de datos.
+                if(respuesta == 1){
+                    continuar = true;
+                }else{
+                    continuar = false;
+                }
+            }catch (InputMismatchException e){
+                continuar = false;
+                System.out.println("Error en el ingreso de datos.");
+            }
 
+        }while (continuar);
+
+    }
+
+    //Verifica que la cadena ingresada no sea una cadena vacia
+    public static String validacionString(String peticion){
+        Scanner scanner = new Scanner(System.in);
+        String s1;
+
+        do {
+            System.out.print(peticion);
+            s1 = scanner.nextLine();
+        }while (s1.equals(""));
+
+        return s1;
     }
 }
